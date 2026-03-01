@@ -1,8 +1,10 @@
 import express from "express";
 import { createRef } from "react";
-
+import dotenv from "dotenv";
 const app = express();
 app.use(express.json());
+
+dotenv.config();
 
 const TODO_ITEMS = [
     {
@@ -161,7 +163,7 @@ app.put ("/todos/:id", (req, res) => {
     });
 });
 
-
+const PORT = process.env.PORT || 8080;
 app.listen(8080, () => {
     console.log("Server running on port 8080");
 });
