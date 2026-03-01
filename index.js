@@ -40,6 +40,15 @@ const TODO_ITEMS = [
         createdAt: new Date().toISOString(),
     }
 ];
+// health api
+app.get("/todos/health", (req, res) => {
+    res.json({
+        success: true,
+        message: "API is healthy",
+    });
+});
+
+
 // Get all todos
 app.get("/todos", (req, res) => {
     res.json({
