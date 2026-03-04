@@ -136,39 +136,53 @@ app.delete("/todos/:id", (req, res) => {
     });
 });
 // update a specific part of it.
-app.patch("/todos/:id", (req, res) => {
+app.patch("/todos/:id/status", (req, res) => {
     const { id } = req.params;
     const index = TODO_ITEMS.findIndex((item) => item.id == id);
     const {isDone} = req.body;
-    if (index !== -1) {
-        TODO_ITEMS[index].isDone = isDone;
+    if (index== -1) {
         return res.json({
-            success: true,
-            message: "Todo updated successfully"
+            success: false,
+            message: "Todo not found",
         });
-    }
-    res.json({
-        success: false,
-        message: "Todo not updated",
+    } else{
+    TODO_ITEMS[index].isDone = isDone;
+    return res.json({
+        success: true,
+        message: "Todo updated successfully"
     });
+}
 });
 // update
-app.put ("/todos/:id", (req, res) => {
+app.put("/todos/:id", (req, res) => {
+
     const { id } = req.params;
+
     const index = TODO_ITEMS.findIndex((item) => item.id == id);
-    const { todoItems, priority, emoji } = req.body;
-    if (index !== -1) {
-        TODO_ITEMS[index].todoItems = todoItems;
-        TODO_ITEMS[index].priority = priority;
-        TODO_ITEMS[index].emoji = emoji;
+
+    if (index == -1) {
         return res.json({
-            success: true,
-            message: "Todo updated successfully"
+            success: false,
+            message: "Todo not found",
         });
     }
-    res.json({
-        success: false,
-        message: "Todo not updated",
+
+    const { todoItems, priority, emoji, isDone } = req.body;
+
+    const newobj = {
+        id: TODO_ITEMS[index].id,
+        todoItems,
+        priority,
+        emoji,
+        isDone,
+        createdAt: TODO_ITEMS[index].createdAt
+    };
+
+    TODO_ITEMS[index] = newobj;
+
+    return res.json({
+        success: true,
+        message: "Todo updated successfully"
     });
 });
 
