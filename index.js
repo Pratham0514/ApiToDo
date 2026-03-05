@@ -48,7 +48,6 @@ app.get("/todos/health", (req, res) => {
     });
 });
 
-
 // Get all todos
 app.get("/todos", (req, res) => {
     res.json({
